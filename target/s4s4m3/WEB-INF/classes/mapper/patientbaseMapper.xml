@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.Dao.PatientbaseDao">
+    <resultMap id="pbMap" type="com.oracle.entity.Patientbase">
+
+        <association property="dept" column="did"
+                     select="com.oracle.Dao.DeptDao.selectbydid"
+                     fetchType="lazy" />
+    </resultMap>
+    <select id="pbselect"  resultMap="pbMap">
+        select * from  t_patientbase
+    </select>
+    <select id="pbidselect"  parameterType="map" resultType="com.oracle.entity.Patientbase">
+        select * from  t_patientbase WHERE pbname=#{pbname}
+    </select>
+    <select id="selectbypbname" parameterType="map" resultMap="pbMap">
+        select * from t_patientbase where pbname like #{pbname}
+    </select>
+    <delete id="pbdelete" parameterType="int" >
+        DELETE FROM t_patientbase where pbid = #{pbid}
+    </delete>
+    <insert id="pbinput" parameterType="com.oracle.entity.Patientbase">
+        INSERT INTO t_patientbase (did,pbname,pbgender,pbage,pbtype,pbtime)
+        VALUES (#{did},#{pbname},#{pbgender},#{pbage},#{pbtype},now())
+    </insert>
+    <update id="changepbtype" parameterType="map">
+        UPDATE t_patientbase SET pbtype=#{pbtype}
+        WHERE pbid=#{pbid}
+    </update>
+
+
+
+
+
+</mapper>

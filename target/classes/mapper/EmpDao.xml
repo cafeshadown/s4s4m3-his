@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.Dao.EmpDao">
+    <resultMap id="empMap" type="com.oracle.entity.Employee">
+
+        <association property="dept" column="did"
+                    select="com.oracle.Dao.DeptDao.selectbydid"
+                    fetchType="lazy" />
+        <association property="position" column="pid"
+                     select="com.oracle.Dao.PositionDao.selectbypid"
+                     fetchType="lazy" />
+    </resultMap>
+    <select id="empselect"  resultMap="empMap">
+        select * from  t_employee
+
+    </select>
+    <select id="login" parameterType="String" resultType="com.oracle.entity.Employee">
+        select * from  t_employee WHERE ename=#{ename}
+
+    </select>
+    <select id="selectbyeid" parameterType="int" resultType="com.oracle.entity.Employee">
+        select * from  t_employee WHERE eid=#{eid}
+
+    </select>
+    <select id="selectbyename" parameterType="map" resultMap="empMap">
+        select * from t_employee where ename like #{ename}
+
+    </select>
+    <select id="empsbypid" parameterType="int" resultMap="empMap">
+        select * from t_employee WHERE pid=#{pid}
+    </select>
+    <select id="empsbydid" parameterType="int" resultMap="empMap">
+        select * from t_employee WHERE did=#{did}
+    </select>
+    <delete id="empdelete" parameterType="int" >
+        DELETE FROM t_employee where eid = #{eid}
+    </delete>
+    <insert id="empinput" parameterType="com.oracle.entity.Employee">
+        INSERT INTO t_employee (ename,did,pid,eage,egender,ephone,ecard,password)
+        VALUES (#{ename},#{did},#{pid},#{eage},#{egender},#{ephone},#{ecard},#{password})
+    </insert>
+    <update id="empupdate" parameterType="com.oracle.entity.Employee">
+        UPDATE t_employee set ename=#{ename},did=#{did},pid=#{pid},eage=#{eage}
+        ,egender=#{egender},ephone=#{ephone},ecard=#{ecard},password=#{password} WHERE eid =#{eid}
+    </update>
+
+
+
+
+</mapper>

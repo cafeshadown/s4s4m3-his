@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.Dao.ChargeDao">
+    <resultMap id="chargeMap" type="com.oracle.entity.Charge">
+        <id  column = "cid"  property = "cid"/>
+        <result column = "pbid" property = "pbid"/>
+        <result column = "cname" property = "cname"/>
+        <result column = "cdid"  property = "cdid"/>
+        <result column = "cdate"  property = "cdate"/>
+        <result column = "cprice"  property = "cprice"/>
+        <result column="ctype" property="ctype"/>
+        <association property="emp" column="eid"
+        select="com.oracle.Dao.EmpDao.selectbyeid"
+                     fetchType="lazy"
+       />
+    </resultMap>
+    <select id="chargeselect"  resultMap="chargeMap">
+        select * from  t_charge
+    </select>
+    <select id="selectbypbid" parameterType="int" resultMap="chargeMap">
+        select * from  t_charge WHERE pbid=#{pbid}
+    </select>
+    <select id="selectbypbname" parameterType="map" resultMap="chargeMap">
+        select * from t_charge where cname like #{cname}
+    </select>
+    <delete id="chargedelete" parameterType="int" >
+        DELETE FROM t_charge where pbid = #{pbid}
+    </delete>
+    <insert id="chargeinput" parameterType="com.oracle.entity.Charge">
+        INSERT INTO t_charge (pbid,cname,cprice,eid,ctype)
+        VALUES (#{pbid},#{cname},#{cprice},#{eid},#{ctype})
+    </insert>
+    <insert id="pbpayroom" parameterType="com.oracle.entity.Charge">
+        INSERT INTO t_charge (pbid,cname,cprice,eid,ctype)
+        VALUES (#{pbid},#{cname},#{cprice},#{eid},#{ctype})
+    </insert>
+
+
+
+
+
+</mapper>

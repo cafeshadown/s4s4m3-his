@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.Dao.KindDao">
+    <resultMap id="kindMap" type="com.oracle.entity.Kind">
+        <id property="kid" column="kid"/>
+        <result property="kname" column="kname"/>
+        <collection property="medicine" column="kid" select="com.oracle.Dao.MedicineDao.selectbykid">
+
+        </collection>
+    </resultMap>
+    <resultMap id="kindsMap" type="com.oracle.entity.Kind">
+        <id property="kid" column="kid"/>
+        <result property="kname" column="kname"/>
+    </resultMap>
+    <select id="selectAll" resultMap="kindMap">
+        select * from t_kind
+    </select>
+    <select id="selectbyid" resultMap="kindMap">
+        select * from t_kind where kid=#{kid}
+    </select>
+    <insert id="KindAdd" parameterType="com.oracle.entity.Kind"  >
+        insert into t_kind (kname) values (#{kname})
+    </insert>
+    <update id="kindupdate" parameterType="com.oracle.entity.Kind">
+        update t_kind set kname=#{kname}} where kid=#{kid}
+    </update>
+</mapper>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.Dao.MedicineDao">
+    <resultMap id="medicineMap" type="com.oracle.entity.Medicine">
+    </resultMap>
+    <select id="medicinelist" resultMap="medicineMap">
+        select * from t_medicine
+    </select>
+    <select id="selectbyid" resultMap="medicineMap">
+        select * from t_medicine where mid=#{mid}
+    </select>
+    <select id="selectbyname"  resultType="com.oracle.entity.Medicine">
+        select * from t_medicine where mname=#{mname}
+    </select>
+    <select id="selectbykid" resultMap="medicineMap">
+        select * from t_medicine where kid=#{kid}
+    </select>
+    <insert id="medicineAdd" parameterType="com.oracle.entity.Medicine"  >
+        insert into t_medicine (mrname,mname,mcount,maddress,kid,eid,price) values (#{mrname},#{mname},#{mcount},#{maddress},#{kid},#{eid},#{price})
+    </insert>
+    <update id="medicineupdate" parameterType="com.oracle.entity.Medicine">
+        update t_medicine set mrname=#{mrname},mname=#{mname},mcount=#{mcount},maddress=#{maddress},kid=#{kid},eid=#{eid},price=#{price} where mid=#{mid}
+    </update>
+    <update id="shouchu">
+        update t_medicine set mcount=#{mcount} where mname=#{mname}
+    </update>
+</mapper>
